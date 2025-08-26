@@ -1,4 +1,4 @@
-const Usuario = require("../class/Usuario") // supondo que o código esteja em usuario.js
+const Usuario = require("../class/Usuario")
 
 test("Deve criar um usuário e retornar mensagem de boas-vindas", () => {
   const user = new Usuario("Carlos", 30, "carlos@email.com")
