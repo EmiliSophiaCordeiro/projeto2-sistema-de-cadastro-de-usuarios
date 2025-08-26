@@ -1,26 +1,44 @@
-const Usuario = require("./class/Usuario")()
+const prompt = require("prompt-sync")()
+const Usuario = require("./class/Usuario")
 
-const usuariosCriados = []
+const usuarios = []
+let continuar = true
 
-while (true) {
-    const nome = prompt('Digite o nome do usuário: ')
-    const idade = prompt('Digite a idade do usuário: ')
-    const email = prompt('Digite o email do usuário: ')
-    const ativoInput = prompt('Usuário ativo? [S/N]: ')
+while (continuar) {
+  const nome = prompt("Digite o nome do usuário: ")
+  const idade = Number(prompt("Digite a idade do usuário: "))
+  const email = prompt("Digite o email do usuário: ")
 
-    const usuario = new Usuario(nome, idade, email)
-    usuario.ativo = ativoInput
+  const user = new Usuario(nome, idade, email)
 
-    usuariosCriados.push(usuario)
+  const ativo = prompt("Usuário ativo? [S/N]: ")
+  if (ativo === "S" || ativo === "s") {
+    user.ativo = true
+  } else if (ativo === "N" || ativo === "n") {
+    user.ativo = false
+  } else {
+    console.log("Dado incorreto!")
+    break
+  }
 
-    const continuar = prompt('Deseja adicionar outro usuário? [S/N]: ')
-    if (continuar.toLowerCase() === 'n') {
-        break
-    } else if (continuar.toLowerCase() !== 's') {
-        console.log('Dado incorreto!')
-        process.exit()
-    }
+  usuarios.push(user)
+
+  const outro = prompt("Deseja adicionar outro usuário? [S/N]: ")
+  if (outro === "N" || outro === "n") {
+    continuar = false
+  } else if (outro !== "S" && outro !== "s") {
+    console.log("Dado incorreto!")
+    break
+  }
 }
 
-usuariosCriados.forEach(usuario => usuario.mostrarDados())
-Usuario.contarUsuarios()
+for (let i = 0; i < usuarios.length; i++) {
+  usuarios[i].mostrarDados()
+  if (i < usuarios.length - 1) {
+    console.log("==========================")
+  }
+}
+
+if (usuarios.length > 0) {
+  Usuario.contarUsuarios()
+}
